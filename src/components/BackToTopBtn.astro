@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 ---
 
 <button id="back-to-top-btn" aria-label="back to top" class="z-50">
@@ -12,6 +12,8 @@ import { Icon } from 'astro-icon';
 </button>
 
 <style>
+    @reference "~/styles/global.css";
+
     button {
         @apply w-12 h-12 sm:w-10 sm:h-10 transition-all rounded-full bg-accent
 	text-bgColor fixed bottom-4 sm:bottom-12 left-[82%] md:left-[90%] 2xl:left-[75%]

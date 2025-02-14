@@ -1,8 +1,9 @@
 import { defineConfig, passthroughImageService } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import astroExpressiveCode from 'astro-expressive-code';
-import tailwind from '@astrojs/tailwind';
 import robotsTxt from 'astro-robots-txt';
+import tailwindcss from '@tailwindcss/vite';
+import astroIcon from 'astro-icon';
 
 import { expressiveCodeOptions } from './src/consts';
 import { remarkReadingTime } from './src/lib/plugin/remark-reading-time.mjs';
@@ -13,7 +14,7 @@ export default defineConfig({
     integrations: [
         astroExpressiveCode(expressiveCodeOptions),
         sitemap(),
-        tailwind(),
+        astroIcon(),
         robotsTxt({
             sitemap: true,
             sitemapBaseFileName: 'sitemap-0',
@@ -46,5 +47,7 @@ export default defineConfig({
         build: {
             minify: false,
         },
+
+        plugins: [tailwindcss()],
     },
 });

@@ -1,6 +1,42 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+    --font-*: initial;
+    --font-mono:
+        system-ui, -apple-system, JetBrainsMono, Roboto, Segoe UI, Helvetica,
+        Microsoft Yahei, PingFang SC, sans-serif;
+
+    --color-bgColor: var(--theme-bg);
+    --color-textColor: var(--theme-text);
+    --color-link: var(--theme-link);
+    --color-accent: var(--theme-accent);
+    --color-accent-2: var(--theme-accent-2);
+    --color-surface: var(--theme-surface);
+    --color-quote: var(--theme-quote);
+    --color-highlight: var(--theme-highlight);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
 
 @layer base {
     /* Font Configution */
@@ -68,11 +104,11 @@
     }
 
     .prose-box blockquote {
-        @apply text-quote border-l-4 border-accent bg-bgColor border-opacity-50 p-4 rounded-md;
+        @apply text-quote border-l-4 border-accent bg-bgColor border-black/50 p-4 rounded-md;
     }
 
     .prose-box a {
-        @apply no-underline border-b border-accent border-opacity-0 hover:border-opacity-100 transition-colors duration-200;
+        @apply no-underline border-b border-accent border-black/0 hover:border-black/100 transition-colors duration-200;
     }
 
     .prose-box strong {
@@ -81,7 +117,7 @@
 
     .prose-box
         :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-        @apply bg-accent-2 !text-surface px-1 py-1 rounded;
+        @apply bg-accent-2 text-surface! px-1 py-1 rounded-sm;
     }
 
     .prose

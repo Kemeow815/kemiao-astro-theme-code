@@ -18,9 +18,11 @@ import BaseLayout from '~/layouts/Base.astro';
 </BaseLayout>
 
 <style>
+    @reference "~/styles/global.css";
+
     #status-code:before {
         content: './';
-        @apply -mr-16 text-accent-2 text-7xl;
+        @apply -mr-8 text-accent-2 text-7xl;
     }
 
     .blink {

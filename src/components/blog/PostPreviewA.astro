@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 import FormattedDate from '~/components/FormattedDate.astro';
 
 type Props = {
@@ -40,6 +40,6 @@ const urlBasePath =
 <style>
     .post-item:before {
         content: '#';
-        @apply text-accent-2;
+        color: var(--color-accent-2);
     }
 </style>
