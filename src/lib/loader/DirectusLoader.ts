@@ -92,7 +92,7 @@ export const DirectusLoader = (conf: {
                     id: post.id,
                     data: post,
                 });
-                const digest = await ctx.generateDigest(data);
+                const digest = ctx.generateDigest(data);
                 const { code: html, metadata } = await markdownProcessor.render(
                     post.content,
                 );
@@ -104,7 +104,7 @@ export const DirectusLoader = (conf: {
                         html: html,
                         metadata: {
                             ...metadata,
-                            imagePaths: [...metadata.imagePaths],
+                            imagePaths: [...metadata.remoteImagePaths],
                         },
                     },
                     digest: digest,

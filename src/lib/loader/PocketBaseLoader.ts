@@ -85,7 +85,7 @@ export const PocketBaseLoader = (conf: {
                     id: post.id,
                     data: post,
                 });
-                const digest = await ctx.generateDigest(data);
+                const digest = ctx.generateDigest(data);
                 const { code: html, metadata } = await markdownProcessor.render(
                     post.content,
                 );
