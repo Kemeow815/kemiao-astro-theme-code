@@ -47,7 +47,6 @@ export default defineConfig({
         build: {
             minify: false,
         },
-
         plugins: [tailwindcss()],
     },
 });

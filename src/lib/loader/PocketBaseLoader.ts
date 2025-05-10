@@ -97,7 +97,7 @@ export const PocketBaseLoader = (conf: {
                         html: html,
                         metadata: {
                             ...metadata,
-                            imagePaths: [...metadata.imagePaths],
+                            imagePaths: [...metadata.remoteImagePaths],
                         },
                     },
                     digest: digest,
