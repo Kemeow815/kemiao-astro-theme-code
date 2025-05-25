@@ -1,0 +1,129 @@
+---
+// src/components/ExpandedMenu.astro
+import type { NavLink } from '~/consts';
+
+interface Props {
+    navLinks: NavLink[];
+}
+
+const { navLinks } = Astro.props;
+---
+
+<div
+    id="expandedMenu"
+    class="absolute top-full left-0 w-full -z-10 bg-bgColor text-textColor border border-textColor
+            opacity-100 invisible pointer-events-none max-h-0 overflow-hidden
+           transition-all duration-500 ease-in-out"
+    aria-modal="true"
+    role="dialog"
+    aria-hidden="true"
+>
+    <div
+        class="container mx-auto flex flex-col flex-grow p-10 md:p-16 overflow-y-auto"
+    >
+        <nav class="flex-grow">
+            <ul
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6"
+            >
+                {
+                    navLinks.map((nav) => (
+                        <li class="text-center sm:text-left">
+                            <a
+                                href={nav.path}
+                                class="block py-3 text-xl md:text-2xl lg:text-3xl hover:text-highlight uppercase tracking-wider font-semibold transition-colors w-full"
+                                data-astro-prefetch
+                            >
+                                {nav.title}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    const menuButtonContainer = document.getElementById('menuButton');
+    const actualButton = menuButtonContainer
+        ? menuButtonContainer.querySelector('button')
+        : null;
+    const expandedMenu = document.getElementById('expandedMenu');
+    let isMenuOpen = false;
+
+    function openMenu() {
+        if (!actualButton || !expandedMenu) return;
+        isMenuOpen = true;
+        actualButton.setAttribute('aria-expanded', 'true');
+        actualButton.textContent = 'CLOSE';
+
+        expandedMenu.classList.remove(
+            'opacity-100',
+            'invisible',
+            'pointer-events-none',
+            'max-h-0',
+        );
+        expandedMenu.classList.add(
+            'opacity-100',
+            'visible',
+            'pointer-events-auto',
+            'max-h-screen',
+        );
+
+        expandedMenu.setAttribute('aria-hidden', 'false');
+        document.addEventListener('click', handleClickOutside);
+    }
+
+    function closeMenu() {
+        if (!actualButton || !expandedMenu) return;
+        isMenuOpen = false;
+        actualButton.setAttribute('aria-expanded', 'false');
+        actualButton.textContent = 'MENU';
+        // For max-height transition
+        expandedMenu.classList.add(
+            'opacity-100',
+            'invisible',
+            'pointer-events-none',
+            'max-h-0',
+        );
+        expandedMenu.classList.remove(
+            'opacity-100',
+            'visible',
+            'pointer-events-auto',
+            'max-h-screen',
+        );
+
+        expandedMenu.setAttribute('aria-hidden', 'true');
+        document.removeEventListener('click', handleClickOutside);
+    }
+
+    function handleClickOutside(event: MouseEvent) {
+        if (!isMenuOpen) return;
+        const clickedOnButtonContainer =
+            menuButtonContainer &&
+            event.target &&
+            menuButtonContainer.contains(event.target as Node);
+        const clickedOnMenu =
+            expandedMenu &&
+            event.target &&
+            expandedMenu.contains(event.target as Node);
+        if (!clickedOnButtonContainer && !clickedOnMenu) {
+            closeMenu();
+        }
+    }
+
+    if (menuButtonContainer && actualButton && expandedMenu) {
+        menuButtonContainer.addEventListener('click', () => {
+            if (isMenuOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+        document.addEventListener('closeExpandedMenu', () => {
+            if (isMenuOpen) {
+                closeMenu();
+            }
+        });
+    }
+</script>

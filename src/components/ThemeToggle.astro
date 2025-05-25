@@ -1,6 +1,7 @@
+<!-- 主题切换按钮 -->
 <button
     id="themeToggle"
-    class="transition-all relative"
+    class="transition-all p-2 relative border-none hover:bg-textColor hover:text-bgColor"
     aria-label="toggle theme"
 >
     <svg width="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -18,31 +19,15 @@
 </button>
 
 <style>
-    #themeToggle {
-        border: 0;
-        background: none;
-    }
-    /* .sun {
-		@apply fill-textColor;
-	}
-	.moon {
-		fill: transparent;
-	} */
-
-    #themeToggle:hover .sun {
-        fill: var(--color-accent);
+    #themeToggle .sun,
+    #themeToggle .moon {
+        fill: var(--theme-text);
     }
 
+    #themeToggle:hover .sun,
     #themeToggle:hover .moon {
-        fill: var(--color-accent);
+        fill: var(--theme-bg);
     }
-
-    /* :global(html[data-theme="dark"]) .sun {
-		fill: transparent;
-	}
-	:global(:root[data-theme="dark"]) .moon {
-		@apply fill-textColor;
-	} */
 </style>
 
 <script is:inline>

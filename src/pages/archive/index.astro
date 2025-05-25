@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { getAllBlogs, sortBlogsByDate } from '~/lib/post/post';
 import BaseLayout from '~/layouts/Base.astro';
 import FormattedDate from '~/components/FormattedDate.astro';
+import PostPreview from '~/components/blog/ListPostPreview.astro';
 import { siteConfig } from '~/consts';
 
 const allPosts = await getAllBlogs();
@@ -38,25 +39,33 @@ const archivedPosts = groupArray(allPostsByDate).reverse();
 ---
 
 <BaseLayout title={`Archive | ${siteConfig.title}`} description="">
-    <main class="space-y-4">
+    <main class="space-y-4 px-4 py-2 border border-textColor">
+        <div class="py-4">
+            {
+                archivedPosts.length > 0 ? (
+                    <h1 class="title">文章归档</h1>
+                ) : (
+                    <h1 class="title">暂无文章</h1>
+                )
+            }
+        </div>
         {
             archivedPosts.map((group) => (
-                <ul class="space-y-2">
-                    <h2 class="title" id={group.year}>
-                        <a href={`#${group.year}`} class="-ml-2 cody-link">
+                <ul class="space-y-2 border border-textColor">
+                    <h2
+                        class="title border-b border-b-textColor text-bgColor bg-textColor py-2 px-4"
+                        id={group.year}
+                    >
+                        <a href={`#${group.year}`} class="-ml-2 no-underline">
                             <time datetime={group.year}>{group.year}</time>
                         </a>
                     </h2>
                     {group.posts.map((p) => (
-                        <li>
-                            <FormattedDate
-                                date={p.data.date_created}
-                                formatStr="MM-dd"
-                            />
-                            <a class="cody-link" href={`/blog/${p.id}`}>
-                                {p.data.title}
-                            </a>
-                        </li>
+                        <PostPreview
+                            post={p}
+                            withDesc
+                            className="border-none"
+                        />
                     ))}
                 </ul>
             ))

@@ -1,7 +1,9 @@
 import type { CollectionEntry } from 'astro:content';
 
 export function getAllTags(posts: Array<CollectionEntry<'blog'>>) {
-    return posts.flatMap(({ data }) => (data.tags ? [...data.tags] : []));
+    return posts.flatMap(({ data }) =>
+        data.tags ? [...data.tags.map((it) => it.trim())] : [],
+    );
 }
 
 export function getUniqueTags(posts: Array<CollectionEntry<'blog'>>) {

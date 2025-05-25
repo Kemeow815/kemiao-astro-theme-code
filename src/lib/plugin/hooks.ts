@@ -1,7 +1,7 @@
 import type { AstroIntegration } from 'astro';
 
 export const DevLoaderSetup: AstroIntegration = {
-    name: 'sqlite-setup-hook',
+    name: 'refresh-content-hook',
     hooks: {
         'astro:server:setup': async ({ server, refreshContent }) => {
             server.middlewares.use('/_refresh_content', async (req, res) => {
@@ -19,7 +19,7 @@ export const DevLoaderSetup: AstroIntegration = {
                         const webhookBody = JSON.parse(body);
                         await refreshContent?.({
                             context: { webhookBody },
-                            loaders: ['astro-directus-blog-loader'],
+                            loaders: ['astro_pocketbase_blog_loader'],
                         });
                         res.writeHead(200, {
                             'Content-Type': 'application/json',

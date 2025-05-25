@@ -1,56 +1,62 @@
 ---
 import BaseLayout from '../layouts/Base.astro';
-import PostPreview from '~/components/blog/HomePostPreview.astro';
+import PostPreview from '~/components/blog/ListPostPreview.astro';
 import SocialMediaLinks from '~/components/SocialMediaLinks.astro';
-import { siteConfig, homeTech } from '~/consts';
+import { siteConfig } from '~/consts';
 import {
     getAllBlogs,
     sortBlogsByDate,
     sortBlogsByPinned,
 } from '~/lib/post/post';
 
-// 首页最多展示 10 篇文章
-const MAX_POSTS = 10;
+// 首页最多展示 5 篇文章
+const MAX_POSTS = 5;
 const allPosts = await getAllBlogs();
 const allPostsByDate = sortBlogsByDate(allPosts).slice(0, MAX_POSTS);
 const allPostsByPinned = sortBlogsByPinned(allPostsByDate);
+const hasMore = allPosts.length > MAX_POSTS;
 ---
 
 <BaseLayout title="Home">
-    <section>
-        <h1 class="title">Hello World</h1>
-        <p class="mb-4 sm:mb-8" set:html={siteConfig.helloworld} />
-        <div>
-            <span>你可以通过下面链接获取更多信息：</span>
-            <SocialMediaLinks />
+    <div class="lg:grid lg:grid-cols-[auto_minmax(0,_1fr)] gap-2">
+        <section>
+            <div
+                class="px-4 py-2 border border-textColor sticky top-20 flex flex-col items-center"
+            >
+                <h1 class="title">Hello World</h1>
+                <p
+                    class="mb-4 sm:mb-8 mx-auto text-wrap"
+                    set:html={siteConfig.helloworld}
+                />
+                <div class="mx-auto">
+                    <span>你可以通过下面链接获取更多信息：</span>
+                    <SocialMediaLinks />
+                </div>
+            </div>
+        </section>
+        <div class="mt-8 lg:mt-0">
+            <section class="px-4 py-2 border border-textColor">
+                <h2 class="title text-center lg:text-left">Recent Posts</h2>
+                <ul class="space-y-2 sm:space-y-4">
+                    {
+                        allPostsByPinned.map((p) => (
+                            <PostPreview post={p} withDesc={false} />
+                        ))
+                    }
+                    {
+                        hasMore && (
+                            <li class="flex items-center justify-center">
+                                <a
+                                    href="/blog"
+                                    class="font-semibold hover:underline"
+                                >
+                                    {'查看更多'}
+                                </a>
+                            </li>
+                        )
+                    }
+                </ul>
+            </section>
         </div>
-    </section>
-
-    <section class="mt-8 sm:mt-16">
-        <h2 class="title">Recent Posts</h2>
-        <ul class="space-y-4 sm:space-y-2">
-            {allPostsByPinned.map((p) => <PostPreview post={p} />)}
-        </ul>
-    </section>
-
-    <section class="mt-16">
-        <h2 class="title">WebSite Technologies</h2>
-        <ul class="space-y-4 sm:space-y-2">
-            {
-                homeTech.map(({ href, title, desc }) => (
-                    <li>
-                        <a
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="cody-link inline-block"
-                        >
-                            {title}
-                        </a>
-                        :<p class="inline-block sm:mt-2">{desc}</p>
-                    </li>
-                ))
-            }
-        </ul>
-    </section>
+    </div>
 </BaseLayout>

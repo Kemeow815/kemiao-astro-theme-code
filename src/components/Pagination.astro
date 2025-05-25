@@ -18,26 +18,26 @@ const { prevUrl, nextUrl } = Astro.props;
         <nav class="mt-4 flex items-center gap-x-4">
             {prevUrl && (
                 <a
-                    class="me-auto sm:hover:text-accent"
+                    class="mr-auto border border-textColor bg-bgColor text-textColor hover:bg-textColor hover:text-bgColor px-8 py-1"
                     href={prevUrl.url}
                     data-astro-prefetch
                 >
                     {prevUrl.srLabel && (
                         <span class="sr-only">{prevUrl.srLabel}</span>
                     )}
-                    {prevUrl.text ? prevUrl.text : 'Previous'}
+                    {prevUrl.text ? prevUrl.text : '<- 不要辣'}
                 </a>
             )}
             {nextUrl && (
                 <a
-                    class="ms-auto sm:hover:text-accent"
+                    class="ml-auto border border-textColor text-textColor bg-bgColor hover:text-bgColor hover:bg-textColor px-8 py-1"
                     href={nextUrl.url}
                     data-astro-prefetch
                 >
                     {nextUrl.srLabel && (
                         <span class="sr-only">{nextUrl.srLabel}</span>
                     )}
-                    {nextUrl.text ? nextUrl.text : 'Next'}
+                    {nextUrl.text ? nextUrl.text : '我还要 ->'}
                 </a>
             )}
         </nav>

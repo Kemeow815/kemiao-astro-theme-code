@@ -41,7 +41,7 @@ export function getBlogsByTag(
 ) {
     return posts.filter((post) => {
         if (post.data.tags) {
-            return post.data.tags.includes(tag);
+            return post.data.tags.map((it) => it.trim()).includes(tag);
         }
         return false;
     });

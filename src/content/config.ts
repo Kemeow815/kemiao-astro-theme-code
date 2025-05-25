@@ -1,7 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
 import { PocketBaseLoader, postSchema } from '~/lib/loader/PocketBaseLoader';
-import { projectSchema } from '~/lib/loader/Project';
 
 // 博客集合
 const blog = defineCollection({
@@ -14,10 +12,4 @@ const blog = defineCollection({
     schema: postSchema,
 });
 
-// 项目集合
-const project = defineCollection({
-    loader: glob({ pattern: '**/[^_]*.md', base: './content/project' }),
-    schema: projectSchema,
-});
-
-export const collections = { blog, project };
+export const collections = { blog };

@@ -4,8 +4,12 @@ import type { MarkdownHeading } from 'astro';
 const { heading } = Astro.props;
 ---
 
-<li>
-    <a href={'#' + heading.slug} id={`toc-${heading.slug}`}>
+<li class="border-b border-textColor">
+    <a
+        href={'#' + heading.slug}
+        id={`toc-${heading.slug}`}
+        class="block py-2 text-textColor hover:font-semibold transition-colors text-base"
+    >
         {heading.text}
     </a>
     {
@@ -20,14 +24,13 @@ const { heading } = Astro.props;
 </li>
 
 <style>
-    @reference "~/styles/global.css";
-
-    li:before {
-        content: '#';
-        @apply -ms-4 text-accent;
+    .active-toc {
+        color: var(--theme-text);
+        --tw-font-weight: var(--font-weight-semibold) /* 600 */;
+        font-weight: var(--font-weight-semibold) /* 600 */;
     }
 
-    .active-toc {
-        @apply bg-accent text-bgColor px-1 py-0 transition-colors;
+    li:last-child {
+        border: none;
     }
 </style>

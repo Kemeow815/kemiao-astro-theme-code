@@ -13,7 +13,6 @@ function diveChildren(item: TocItem, depth: number): Array<TocItem> {
     if (depth === 1 || !item.subheadings.length) {
         return item.subheadings;
     } else {
-        // e.g., 2
         return diveChildren(
             item.subheadings[item.subheadings.length - 1] as TocItem,
             depth - 1,
@@ -22,14 +21,12 @@ function diveChildren(item: TocItem, depth: number): Array<TocItem> {
 }
 
 function buildToc(headings: ReadonlyArray<MarkdownHeading>) {
-    // this ignores/filters out h1 element(s)
     const bodyHeadings = headings.filter(({ depth }) => depth > 1);
     const toc: Array<TocItem> = [];
 
     bodyHeadings.forEach((h) => {
         const heading: TocItem = { ...h, subheadings: [] };
 
-        // add h2 elements into the top level
         if (heading.depth === 2) {
             toc.push(heading);
         } else if (toc.length > 0) {
@@ -38,8 +35,6 @@ function buildToc(headings: ReadonlyArray<MarkdownHeading>) {
                 throw new Error(`Orphan heading found: ${heading.text}.`);
             }
 
-            // higher depth
-            // push into children, or children's children
             const gap = heading.depth - lastItemInToc.depth;
             const target = diveChildren(lastItemInToc, gap);
             target.push(heading);
@@ -49,17 +44,23 @@ function buildToc(headings: ReadonlyArray<MarkdownHeading>) {
 }
 ---
 
-<nav class="sticky top-20 order-2 hidden basis-64 lg:block">
-    <!-- <hr/> -->
-    <h2 class="font-bold text-lg">Table of Contents</h2>
-    <ul class="-me-32 space-y-1" id="toc">
+<nav
+    class="sticky top-20 order-2 hidden basis-64 lg:block border border-textColor p-4"
+>
+    <h2 class="font-semibold text-lg uppercase tracking-wider text-textColor">
+        Table of Contents
+    </h2>
+    <hr class="border-t border-textColor my-3" />
+    <ul id="toc">
         {
             toc.length > 0 ? (
                 toc.map((heading) => (
                     <TableOfContentsHeading heading={heading} />
                 ))
             ) : (
-                <p class="text-red-500">不规范目录，已取消显示</p>
+                <p class="text-textColor">
+                    No table of contents available.
+                </p> /* Adjusted message style */
             )
         }
     </ul>

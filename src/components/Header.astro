@@ -1,150 +1,37 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import { siteConfig, NAV_LINKS } from '../consts';
-import ThemeToggle from '../components/ThemeToggle.astro';
-
-const url = new URL(Astro.request.url);
+import { siteConfig, NAV_LINKS, type NavLink } from '../consts';
+import ThemeToggle from '~/components/ThemeToggle.astro';
+import ExpandedMenu from '~/components/ExpandedMenu.astro';
+// 顶部导航栏
 ---
 
-<header
-    class="group relative mb-8 flex justify-between items-center gap-4 pt-4 md:pt-8"
-    id="main-header"
->
-    <div class="block">
-        <a
-            class="title whitespace-nowrap"
-            href="/"
-            aria-current={url.pathname === '/' ? 'page' : false}
-            >{siteConfig.title}</a
-        >
-    </div>
-
-    <nav
-        class="mt-4 bg-surface/95 sm:bg-bgColor absolute hidden top-8 w-full sm:block sm:static sm:mt-0 group-[.menu-open]:z-50 group-[.menu-open]:flex group-[.menu-open]:bg-bgColor"
-        id="navigation-menu"
-        aria-label="main menu"
+<header class="sticky top-0 z-50 bg-bgColor text-textColor pt-5">
+    <div
+        class="relative grid grid-cols-[auto_1fr_auto] items-center p-0 border-textColor border bg-bgColor text-textColor"
     >
-        <div
-            class="space-y-1 px-4 pb-3 pt-2 sm:flex sm:ms-4 sm:px-0 sm:py-0 sm:space-y-0 sm:space-x-6"
-        >
-            {
-                NAV_LINKS.map((nav) => (
-                    <HeaderLink
-                        class="block py-2 sm:py-0"
-                        href={nav.path}
-                        title={nav.title}
-                        aria-current={
-                            url.pathname === nav.path ? 'page' : false
-                        }
-                        data-astro-prefetch
-                    >
-                        {nav.title}
-                    </HeaderLink>
-                ))
-            }
+        <div class="px-4 py-0">
+            <a class="whitespace-nowrap font-bold no-underline" href="/"
+                >{siteConfig.title}</a
+            >
         </div>
-    </nav>
 
-    <div class="flex gap-2 items-center justify-center">
-        <ThemeToggle />
+        <div class="flex justify-center">
+            <ThemeToggle />
+        </div>
 
-        <nav-button>
-            <div class="sm:hidden">
-                <span class="sr-only">open main menu</span>
-                <button
-                    class="group flex items-center justify-center"
-                    type="button"
-                    id="navigation-menu-btn"
-                    aria-label="Open main menu"
-                    aria-expanded="false"
-                    aria-haspopup="menu"
-                >
-                    <!-- icon when menu is closed -->
-                    <svg
-                        class="transform transition-all duration-150 ease-out group-aria-expanded:scale-0 group-aria-expanded:opacity-0 h-6 w-6 block group-aria-expanded:hidden"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                        ></path>
-                    </svg>
+        <div
+            id="menuButton"
+            class="hover:bg-textColor hover:text-bgColor bg-bgColor text-textColor px-6 py-1 m-0 cursor-pointer border-l border-l-textColor"
+        >
+            <button
+                class="bg-transparent border-none text-xs font-semibold tracking-wider cursor-pointer"
+                aria-label="Open menu"
+                aria-expanded="false"
+            >
+                MENU
+            </button>
+        </div>
 
-                    <!-- icon when menu is open -->
-                    <svg
-                        class="transform transition-all duration-150 ease-out h-6 w-6 scale-0 text-accent opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100 hidden group-aria-expanded:block"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-        </nav-button>
+        <ExpandedMenu navLinks={NAV_LINKS} />
     </div>
 </header>
-
-<style>
-    @reference "~/styles/global.css";
-
-    .title {
-        @apply bg-accent p-1 text-bgColor text-sm;
-    }
-
-    .title:before {
-        content: '[';
-        margin-right: 0;
-        @apply text-bgColor;
-    }
-
-    .title:after {
-        content: ']';
-        @apply text-bgColor;
-    }
-</style>
-
-<script>
-    // src: https://github.com/chrismwilliams/astro-theme-cactus/blob/a85e0e559d3f92b32e73990486c0574b2b733227/src/components/layout/Header.astro
-
-    class MobileNavBtn extends HTMLElement {
-        private headerEl: HTMLElement;
-        private mobileButtonEl: HTMLButtonElement;
-        private menuOpen: boolean;
-
-        constructor() {
-            super();
-            this.headerEl = document.getElementById('main-header')!;
-            this.mobileButtonEl = this.querySelector(
-                'button',
-            ) as HTMLButtonElement;
-            this.menuOpen = false;
-
-            this.mobileButtonEl.addEventListener(
-                'click',
-                this.toggleMobileMenu,
-            );
-        }
-
-        toggleMobileMenu = () => {
-            this.headerEl.classList.toggle('menu-open');
-            this.menuOpen = !this.menuOpen;
-            this.mobileButtonEl.setAttribute(
-                'aria-expanded',
-                this.menuOpen.toString(),
-            );
-        };
-    }
-
-    customElements.define('nav-button', MobileNavBtn);
-</script>

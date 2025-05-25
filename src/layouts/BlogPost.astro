@@ -4,7 +4,7 @@
  */
 import { render, type CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
-import Layout from '~/layouts/Sidebar.astro';
+import BaseLayout from '~/layouts/Base.astro';
 import FormattedDate from '~/components/FormattedDate.astro';
 import TOC from '~/components/TableOfContents.astro';
 import BackToTopBtn from '~/components/BackToTopBtn.astro';
@@ -33,116 +33,188 @@ const articleDate = date_updated?.toISOString() ?? date_created.toISOString();
 const articleLink = Astro.url.toString();
 ---
 
-<Layout
+<BaseLayout
     title={title}
     description={description}
     articleDate={articleDate}
     katex={katex}
 >
-    <article
-        class="cody-bg prose dark:prose-invert prose-box text-textColor max-w-4xl"
+    <div
+        class="lg:grid lg:grid-cols-[auto_minmax(0,_1fr)_auto] lg:gap-2 px-2 md:px-0"
     >
-        <header class="space-y-2">
-            <div class="flex gap-2 items-center">
-                <h1 class="prose-2xl my-0">{title}</h1>
-                {
-                    draft && (
-                        <span class="px-1 py-0 bg-red-200 text-red-600 text-sm font-semibold">
-                            draft
-                        </span>
-                    )
-                }
-            </div>
+        {/* Left Sidebar (Meta Info) */}
+        <aside class="hidden lg:block order-1">
             <div
-                class="flex flex-col gap-2 items-start md:flex-row md:items-center"
+                class="sticky top-20 border border-textColor p-2 flex flex-col text-xs"
             >
-                <span class="font-semibold text-sm text-textColor">
-                    <FormattedDate date={date_created} formatStr="yyyy-MM-dd" />
-                    <span>
-                        / {minutesRead}
-                    </span>
-                </span>
+                <div>
+                    <div
+                        class="font-semibold uppercase tracking-wider text-textColor mb-1 text-lg"
+                    >
+                        发布时间
+                    </div>
+                    <FormattedDate
+                        date={date_created}
+                        formatStr="yyyy-MM-dd"
+                        class="text-textColor text-sm"
+                    />
+                    <span class="text-textColor text-sm"> / {minutesRead}</span>
+                </div>
                 {
                     date_updated && (
-                        <div class="italic px-2 bg-accent text-bgColor w-fit text-sm font-normal">
-                            Last updated:{' '}
-                            <FormattedDate
-                                date={date_updated}
-                                formatStr="yyyy-MM-dd"
-                            />
-                        </div>
+                        <>
+                            <hr class="border-t border-textColor my-2" />
+                            <div>
+                                <div class="font-semibold uppercase tracking-wider text-textColor mb-1 text-lg">
+                                    上次更新时间
+                                </div>
+                                <FormattedDate
+                                    date={date_updated}
+                                    formatStr="yyyy-MM-dd"
+                                    class="text-textColor text-base"
+                                />
+                            </div>
+                        </>
                     )
                 }
+                {
+                    tags && tags.length > 0 && (
+                        <>
+                            <hr class="border-t border-textColor my-2" />
+                            <div>
+                                <div class="font-semibold uppercase tracking-wider text-textColor mb-2 text-lg">
+                                    标签
+                                </div>
+                                <ul class="flex flex-wrap gap-1.5">
+                                    {tags.map((tag: string) => (
+                                        <li class="tag text-sm">
+                                            <a href={`/tags/${tag}`}>{tag}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </>
+                    )
+                }
+                <hr class="border-t border-textColor my-4" />
+                <div class="mb-2">
+                    <a
+                        href="/blog"
+                        class="font-semibold uppercase tracking-wider text-textColor text-sm"
+                    >
+                        &larr; 返回博客列表
+                    </a>
+                </div>
             </div>
-            {
-                tags && (
-                    <ul class="not-prose flex gap-2 flex-wrap">
+        </aside>
+
+        {/* Main content area (Center column on large screens) */}
+        <div class="border border-textColor p-6 md:p-8 order-2">
+            <article class="text-textColor">
+                <header class="mb-8">
+                    <h1 class="title font-bold text-textColor mb-6">{title}</h1>
+                    {
+                        draft && (
+                            <div class="mb-4">
+                                <span class="px-2 py-1 bg-red-100 text-red-700 text-xs font-semibold uppercase tracking-wider">
+                                    草稿
+                                </span>
+                            </div>
+                        )
+                    }
+                    <div class="mb-6 lg:hidden">
+                        <div
+                            class="flex items-center flex-col justify-normal sm:flex-row sm:justify-between px-4 pb-4 border-b border-textColor"
+                        >
+                            <div class="flex items-center gap-2">
+                                <div
+                                    class="font-semibold uppercase tracking-wider text-textColor mb-1 text-base"
+                                >
+                                    {'发布时间: '}
+                                </div>
+                                <FormattedDate
+                                    date={date_created}
+                                    formatStr="yyyy-MM-dd"
+                                    class="text-textColor text-sm"
+                                />
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span
+                                    class="text-textColor text-base uppercase font-semibold tracking-wider"
+                                    >{'阅读时间：'}</span
+                                >
+                                <span class="text-textColor text-sm"
+                                    >{minutesRead}</span
+                                >
+                            </div>
+                            {
+                                date_updated && (
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold uppercase tracking-wider text-textColor mb-1 text-base">
+                                            {'上次更新时间：'}
+                                        </div>
+                                        <FormattedDate
+                                            date={date_updated}
+                                            formatStr="yyyy-MM-dd"
+                                            class="text-textColor text-sm"
+                                        />
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </div>
+                </header>
+
+                <div
+                    class="prose dark:prose-invert lg:prose-lg max-w-none text-textColor bg-bgColor prose-box"
+                >
+                    <slot />
+                </div>
+
+                <div
+                    class="mt-12 border border-textColor p-4 flex flex-col text-sm"
+                >
+                    <span class="flex items-center">
                         <Icon
-                            class="w-5 h-5"
-                            name="carbon:tag-group"
-                            aria-hidden="true"
+                            class="w-5 h-5 mr-2 shrink-0"
                             focusable="false"
+                            name="carbon:link"
                         />
-                        {tags.map((tag: string) => (
-                            <li class="tag">
-                                <a href={`/tags/${tag}`}>{tag}</a>
-                            </li>
-                        ))}
-                    </ul>
-                )
-            }
-        </header>
-        <hr class="my-4" />
-        <main
-            class="prose-sm md:prose-base prose-headings:font-semibold prose-headings:ml-4 prose-headings:before:absolute prose-headings:before:-ms-5 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none prose-a:text-accent"
-        >
-            <slot />
-        </main>
-        <!-- 底部文章其他信息 -->
-        <div
-            class="mt-12 border border-accent-2 rounded-md break-words p-6 flex flex-col space-y-1 text-sm"
-        >
-            <!-- For You -->
-            <span class="flex items-center break-all">
-                <Icon class="w-5 h-5 me-1" focusable="false" name="mdi:sign" />
-                <span class="text-sm whitespace-nowrap me-1">{'For You：'}</span
-                >
-                <span class="text-sm">愿你眼中有光芒，手中有温度。</span>
-            </span>
-            <!-- 文章链接与分享 -->
-            <span class="flex items-center break-all">
-                <Icon
-                    class="w-5 h-5 me-1"
-                    focusable="false"
-                    name="carbon:link"
-                />
-                <span class="text-sm whitespace-nowrap me-1">本文链接：</span>
-                <span
-                    id="post-share-link"
-                    class="text-sm no-underline border-none cursor-pointer"
-                    >{articleLink}</span
-                >
-            </span>
-            <!-- 转载声明 -->
-            <span class="flex items-center break-all">
-                <Icon
-                    class="w-5 h-5 me-1"
-                    focusable="false"
-                    name="carbon:share"
-                />
-                <span class="text-sm whitespace-nowrap me-1">转载声明：</span>
-                <span class="text-sm"
-                    >转载请保留本文地址，著作权归作者所有。</span
-                >
-            </span>
+                        <span class="mr-1">本文链接：</span>
+                        <span
+                            id="post-share-link"
+                            class="break-all cursor-pointer hover:underline"
+                            >{articleLink}</span
+                        >
+                    </span>
+                    <hr class="border-t border-textColor" />
+                    <span class="flex items-center">
+                        <Icon
+                            class="w-5 h-5 mr-2 shrink-0"
+                            focusable="false"
+                            name="carbon:share"
+                        />
+                        <span class="mr-1">转载声明：</span>
+                        <span>转载请保留本文地址，著作权归作者所有。</span>
+                    </span>
+                </div>
+                <BackToTopBtn />
+            </article>
         </div>
-        <!-- 返回顶部按钮 -->
-        <BackToTopBtn />
-    </article>
-    <aside slot="sidebar" class="hidden sm:block">
-        {!!headings.length && <TOC headings={headings} />}
-    </aside>
-</Layout>
+
+        {/* Right Sidebar (TOC) */}
+        {
+            !!headings.length &&
+                headings.filter((h) => h.depth > 1).length > 0 && (
+                    <aside class="hidden lg:block order-3">
+                        <div class="sticky top-20">
+                            <TOC headings={headings} />
+                        </div>
+                    </aside>
+                )
+        }
+    </div>
+</BaseLayout>
 
 <script>
     const postLinkBtn = document.getElementById('post-share-link');

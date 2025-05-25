@@ -4,42 +4,53 @@ import { Icon } from 'astro-icon/components';
 import FormattedDate from '~/components/FormattedDate.astro';
 
 type Props = {
-    post: CollectionEntry<'blog' | 'project'>;
+    post: CollectionEntry<'blog'>;
     withDesc?: boolean;
     className?: string;
 };
 
-const { post, withDesc = false } = Astro.props;
+const { post, withDesc = false, className } = Astro.props;
 const postDate = post.data.date_created;
 const pinned: boolean = !!post.data.pin;
-const urlBasePath =
-    post.collection === 'project' ? 'projects' : post.collection;
 ---
 
-<li>
-    <span>
-        <a href={`/${urlBasePath}/${post.id}/`} class="post-item">
-            <h4 class="cody-link inline font-bold">{post.data.title}</h4>
-        </a>
+<li class={className}>
+    <article
+        class="bg-bgColor border border-textColor hover:bg-textColor hover:text-bgColor p-6 flex flex-col gap-y-0.5"
+    >
+        <div class="flex justify-between items-center">
+            <a
+                href={`/blog/${post.id}/`}
+                class="text-xl md:text-2xl font-semibold transition-colors duration-100"
+                data-astro-prefetch
+            >
+                {post.data.title}
+            </a>
+
+            <div class="flex items-center gap-2">
+                <FormattedDate date={postDate} class="text-base" />
+                {
+                    pinned && (
+                        <Icon
+                            class="h-5 w-5 rotate-12"
+                            name="mdi:pin"
+                            aria-label="Pinned post"
+                            focusable="false"
+                        />
+                    )
+                }
+            </div>
+        </div>
         {
-            pinned && (
-                <Icon
-                    class="h-5 w-5 inline text-accent rotate-45 -ml-1"
-                    name="mdi:pin"
-                    aria-hidden="true"
-                    focusable="false"
-                />
+            withDesc && (
+                <>
+                    <hr class="border-t border-textColor" />
+                    <p class="text-sm leading-relaxed">
+                        {' '}
+                        {post.data.description}
+                    </p>
+                </>
             )
         }
-    </span>
-    <p class="date pr-2 mt-1">
-        <FormattedDate date={postDate} class="text-textColor" />
-    </p>
-    {withDesc && <p class="italic">{post.data.description}</p>}
+    </article>
 </li>
-<style>
-    .post-item:before {
-        content: '#';
-        color: var(--color-accent-2);
-    }
-</style>

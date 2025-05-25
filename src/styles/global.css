@@ -7,16 +7,15 @@
 @theme {
     --font-*: initial;
     --font-mono:
-        system-ui, -apple-system, JetBrainsMono, Roboto, Segoe UI, Helvetica,
-        Microsoft Yahei, PingFang SC, sans-serif;
+        JetBrainsMono, Menlo, Monaco, Consolas, 'Liberation Mono',
+        'Courier New', monospace;
+    --font-sans:
+        system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol';
 
     --color-bgColor: var(--theme-bg);
     --color-textColor: var(--theme-text);
-    --color-link: var(--theme-link);
-    --color-accent: var(--theme-accent);
-    --color-accent-2: var(--theme-accent-2);
-    --color-surface: var(--theme-surface);
-    --color-quote: var(--theme-quote);
     --color-highlight: var(--theme-highlight);
 }
 
@@ -64,26 +63,16 @@
     :root,
     :root[data-theme='light'] {
         color-scheme: light;
-        /* Material 3 浅色主题 */
-        --theme-bg: #fffbfe; /* Material 3 标准背景色 */
-        --theme-text: #1c1b1f; /* 主要文本色 */
-        --theme-accent: #6750a4; /* 主要强调色 */
-        --theme-accent-2: #9a82db; /* 次要强调色 */
-        --theme-surface: #f7f2fa; /* 表面色 */
-        --theme-quote: #6750a4; /* 引用色，与强调色一致 */
-        --theme-highlight: rgba(103, 80, 164, 0.12); /* 高亮色 */
+        --theme-bg: #ffffff;
+        --theme-text: #333333;
+        --theme-highlight: #2563EB; /* Very subtle highlight */
     }
 
     :root[data-theme='dark'] {
         color-scheme: dark;
-        /* Material 3 深色主题 */
-        --theme-bg: #1c1b1f; /* 深色背景 */
-        --theme-text: #e6e1e5; /* 深色主题文本色 */
-        --theme-accent: #d0bcff; /* 深色主题强调色 */
-        --theme-accent-2: #ccc2dc; /* 深色主题次要强调色 */
-        --theme-surface: #2b2930; /* 深色主题表面色 */
-        --theme-quote: #d0bcff; /* 深色主题引用色 */
-        --theme-highlight: rgba(208, 188, 255, 0.12); /* 深色主题高亮色 */
+        --theme-bg: #18181B; /* Dark grayish blue bg */
+        --theme-text: #D4D4D8; /* Light gray text */
+        --theme-highlight: #FACC15; /* Subtle highlight */
     }
 
     html {
@@ -91,120 +80,22 @@
     }
 
     html body {
-        @apply mx-auto flex min-h-screen max-w-7xl flex-col px-4 font-mono text-sm md:text-base font-normal antialiased bg-bgColor text-textColor;
+        @apply mx-auto flex min-h-screen flex-col px-4 md:px-5 font-sans text-base md:text-lg leading-relaxed md:leading-loose font-normal antialiased bg-bgColor text-textColor;
     }
 
-    /*
-  * Markdown Post Style
-  */
-
-    .prose-box {
-        word-wrap: break-word;
-        @apply leading-relaxed;
+    /* Headings Style */
+    /* h1, h2, h3, h4, h5, h6 {
+        @apply font-bold text-textColor;
     }
-
-    .prose-box blockquote {
-        @apply text-quote border-l-4 border-accent bg-bgColor border-black/50 p-4 rounded-md;
-    }
-
-    .prose-box a {
-        @apply no-underline border-b border-accent border-black/0 hover:border-black/100 transition-colors duration-200;
-    }
-
-    .prose-box strong {
-        @apply font-bold text-accent;
-    }
-
-    .prose-box
-        :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-        @apply bg-accent-2 text-surface! px-1 py-1 rounded-sm;
-    }
-
-    .prose
-        :where(code):not(
-            :where([class~='not-prose'], [class~='not-prose'] *)
-        )::before {
-        content: none !important;
-    }
-
-    .prose
-        :where(code):not(
-            :where([class~='not-prose'], [class~='not-prose'] *)
-        )::after {
-        content: none !important;
-    }
-    pre.astro-code {
-        /* @apply !bg-surface; */
-        @apply bg-surface p-4 rounded-md overflow-x-auto;
-    }
-    div:has(> pre.astro-code) {
-        @apply border-accent border-2;
-    }
-
-    .prose-box hr {
-        border-top-style: dashed;
-        border-top-width: 0.5px;
-        @apply border-t-2 border-accent my-6;
-    }
-    .prose-box thead {
-        @apply border-b-0;
-    }
-
-    .prose-box thead th {
-        @apply font-bold border-b border-dashed border-accent;
-    }
-
-    .prose-box tbody tr {
-        @apply border-b-0;
-    }
-
-    .prose-box tfoot {
-        @apply font-bold border-t border-dashed border-accent;
-    }
-
-    .prose-box sup {
-        @apply ms-0.5;
-    }
-
-    .prose-box sup > a {
-        @apply bg-none;
-    }
-
-    .prose-box sup > a:hover {
-        @apply text-accent no-underline bg-none;
-    }
-
-    .prose-box sup > a:before {
-        content: '[';
-        @apply text-accent;
-    }
-
-    .prose-box sup > a:after {
-        content: ']';
-        @apply text-accent;
-    }
-
-    .prose-box mark {
-        @apply bg-highlight text-textColor;
-    }
-
-    .prose-box li::marker {
-        @apply text-accent;
-    }
-
-    .prose-box table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        margin-bottom: 2rem;
-    }
-
-    /*
-  * Markdown Style End
-  */
+    h1 { @apply text-3xl md:text-4xl; }
+    h2 { @apply text-2xl md:text-3xl; }
+    h3 { @apply text-xl md:text-2xl; }
+    h4 { @apply text-lg md:text-xl; }
+    h5 { @apply text-base md:text-lg; }
+    h6 { @apply text-sm md:text-base; } */
 
     .tag {
-        @apply bg-accent px-1 py-0 text-bgColor font-semibold text-sm;
+        @apply border border-textColor px-2 py-1 text-textColor font-semibold text-xs rounded-none hover:bg-textColor hover:text-bgColor transition-colors;
     }
 
     .tag:before {
@@ -229,38 +120,48 @@
         background-image: linear-gradient(
             transparent,
             transparent 4px,
-            var(--theme-accent) 4px,
-            var(--theme-accent)
+            var(--theme-text) 4px,
+            /* This var() will work directly in linear-gradient */
+                var(--theme-text)
         );
     }
 
     .cody-bg {
-        @apply p-4 bg-surface;
+        /* This class might be unused now, but updating for consistency */
+        @apply p-4 bg-bgColor;
     }
 
     .cody-copy-code {
-        @apply absolute top-2 right-2 bg-accent text-bgColor p-0.5 border border-accent hover:bg-bgColor hover:text-accent transition-all duration-200 text-sm;
+        @apply absolute top-2 right-2 bg-textColor text-bgColor p-0.5 border border-textColor hover:bg-bgColor hover:text-textColor transition-all duration-200 text-sm;
     }
 
     .title:before {
+        /* This class was used in Header, now site-title. Keeping for general use if any. */
         content: '#';
-        @apply mr-2 text-accent-2;
+        @apply mr-2 text-highlight;
     }
 
     .title {
-        @apply font-bold mb-4;
+        /* This class was used in Header, now site-title. Keeping for general use if any. */
+        @apply font-bold mb-4 text-2xl md:text-3xl;
     }
 
     hr {
-        @apply border-accent border-dashed my-6;
+        /* General hr style */
+        @apply border-t border-textColor my-4;
+    }
+
+    /* General line separator style - more distinct */
+    .line-separator {
+        @apply w-full h-px bg-textColor my-8;
     }
 
     ::selection {
-        @apply bg-accent text-bgColor;
+        @apply bg-textColor text-bgColor;
     }
 
     ::-moz-selection {
-        @apply bg-accent text-bgColor;
+        @apply bg-textColor text-bgColor;
     }
 
     .fade-in {
@@ -271,3 +172,112 @@
         @apply transition-opacity duration-700 ease-in opacity-0 duration-700;
     }
 }
+
+/*
+  * Markdown Post Style
+  */
+
+.prose-box {
+    word-wrap: break-word;
+    @apply text-textColor bg-bgColor;
+    /* @apply leading-relaxed; Replaced by body's leading-loose */
+}
+
+.prose-box blockquote {
+    @apply text-textColor border-l-4 border-textColor bg-bgColor p-4 rounded-none my-6 border; /* No rounding, clear border, no shadow */
+}
+
+.prose-box a {
+    @apply text-highlight hover:text-highlight no-underline border-b border-textColor transition-colors duration-200; /* Ensure links use accent color */
+}
+
+.prose-box strong {
+    @apply font-semibold text-textColor;
+}
+
+.prose-box
+    :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply bg-bgColor text-textColor px-1.5 py-0.5 border border-textColor;
+}
+
+.prose
+    :where(code):not(
+        :where([class~='not-prose'], [class~='not-prose'] *)
+    )::before {
+    content: none !important;
+}
+
+.prose
+    :where(code):not(
+        :where([class~='not-prose'], [class~='not-prose'] *)
+    )::after {
+    content: none !important;
+}
+pre.astro-code {
+    @apply bg-bgColor p-4 rounded-none overflow-x-auto my-6 border border-textColor;
+}
+div:has(> pre.astro-code) {
+    @apply border-none;
+}
+
+.prose-box hr {
+    border-top-style: solid;
+    border-top-width: 1px;
+    @apply border-t-1 border-textColor my-2;
+}
+.prose-box thead {
+    @apply border-b-0;
+}
+
+.prose-box thead th {
+    @apply font-bold border-b border-solid border-textColor;
+}
+
+.prose-box tbody tr {
+    @apply border-b border-dashed border-textColor;
+}
+
+.prose-box tfoot {
+    @apply font-bold border-t border-solid border-textColor;
+}
+
+.prose-box sup {
+    @apply ms-0.5;
+}
+
+.prose-box sup > a {
+    @apply bg-none;
+}
+
+.prose-box sup > a:hover {
+    @apply text-textColor no-underline bg-none;
+}
+
+.prose-box sup > a:before {
+    content: '[';
+    @apply text-textColor;
+}
+
+.prose-box sup > a:after {
+    content: ']';
+    @apply text-textColor;
+}
+
+.prose-box mark {
+    @apply bg-bgColor text-textColor;
+}
+
+.prose-box li::marker {
+    @apply text-textColor;
+}
+
+.prose-box table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 2rem;
+}
+
+/*
+* Markdown Style End
+*/

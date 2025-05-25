@@ -4,16 +4,14 @@ import BaseLayout from '~/layouts/Base.astro';
 
 <BaseLayout title="404">
     <section
-        class="flex flex-col md:flex-row justify-center items-center border-dashed border border-accent h-80"
+        class="flex flex-col md:flex-row justify-center items-center border-dashed border border-textColor h-80"
     >
         <div class="flex-col gap-2 text-7xl p-4 h-min">
-            <span id="status-code" class="text-accent"> 404</span>
-            <div
-                class="border-b-2 border-accent w-full border-solid blink mt-1"
-            >
+            <span id="status-code" class="text-textColor"> 404</span>
+            <div class="border-b-2 border-text w-full border-solid blink mt-1">
             </div>
         </div>
-        <span class="text-lg">走丢了！你知道自己的路在哪儿吗？</span>
+        <span class="text-lg">{'这儿没你想看的信息 {{{(>_<)}}}'}</span>
     </section>
 </BaseLayout>
 
@@ -22,7 +20,7 @@ import BaseLayout from '~/layouts/Base.astro';
 
     #status-code:before {
         content: './';
-        @apply -mr-8 text-accent-2 text-7xl;
+        @apply -mr-8 text-textColor text-7xl;
     }
 
     .blink {

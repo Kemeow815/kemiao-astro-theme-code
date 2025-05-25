@@ -11,20 +11,34 @@ interface Props {
     title?: string;
     description?: string;
     image?: string;
+    articleDate?: string;
+    katex?: boolean;
 }
 
-const { title = '', description = siteConfig.description, image } = Astro.props;
+const {
+    title = '',
+    description = siteConfig.description,
+    image,
+    articleDate,
+    katex,
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="dark">
     <head>
-        <BaseHead title={title} description={description} image={image} />
+        <BaseHead
+            title={title}
+            description={description}
+            image={image}
+            articleDate={articleDate}
+            katex={katex}
+        />
     </head>
     <body>
         <Header />
-        <main>
-            <section class="cody-bg">
+        <main class="py-6 md:py-8">
+            <section>
                 <slot />
             </section>
         </main>

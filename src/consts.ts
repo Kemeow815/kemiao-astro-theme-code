@@ -13,6 +13,7 @@ type Config = {
         author: string;
         description?: string;
     };
+    pageSize: number;
 };
 
 type SocialLink = {
@@ -30,6 +31,7 @@ export const siteConfig: Config = {
         author: 'twiify',
         description: '简单生活，优雅前行。',
     },
+    pageSize: 10,
 };
 
 /** 
@@ -55,7 +57,14 @@ export const socialLinks: Array<SocialLink> = [
     },
 ];
 
-export const NAV_LINKS: Array<{ title: string; path: string }> = [
+// Type for navigation links
+export interface NavLink {
+    title: string;
+    path: string;
+}
+
+export const NAV_LINKS: NavLink[] = [
+    // Use the exported NavLink type
     {
         title: 'Home',
         path: '/',
@@ -63,10 +72,6 @@ export const NAV_LINKS: Array<{ title: string; path: string }> = [
     {
         title: 'Blog',
         path: '/blog',
-    },
-    {
-        title: 'Archive',
-        path: '/archive',
     },
     {
         title: 'Friends',
@@ -91,21 +96,21 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
         codeFontSize: '0.9rem',
         codeLineHeight: '1.5rem',
         borderColor: 'var(--theme-text)',
-        codeBackground: 'var(--theme-surface)',
+        codeBackground: 'var(--theme-bg)',
         frames: {
             editorTabBarBackground: 'transparent',
             editorTabBarBorderBottomColor: 'var(--theme-text)',
-            editorActiveTabBackground: 'var(--theme-accent)',
+            editorActiveTabBackground: 'var(--theme-text)',
             editorActiveTabForeground: 'var(--theme-bg)',
             editorTabBarBorderColor: 'var(--theme-text)',
             editorActiveTabBorderColor: 'var(--theme-text)',
             editorActiveTabIndicatorHeight: '2px',
             editorActiveTabIndicatorTopColor: 'none',
             editorActiveTabIndicatorBottomColor: 'var(--theme-text)',
-            terminalBackground: 'var(--theme-surface)',
+            terminalBackground: 'var(--theme-bg)',
             terminalTitlebarBackground: 'transparent',
             terminalTitlebarBorderBottomColor: 'var(--theme-text)',
-            terminalTitlebarDotsForeground: 'var(--theme-accent)',
+            terminalTitlebarDotsForeground: 'var(--theme-text)',
             terminalTitlebarDotsOpacity: '0.5',
             frameBoxShadowCssValue: '0.15rem 0.18rem',
             shadowColor: 'var(--theme-text)',
@@ -128,32 +133,3 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
     themes: ['github-dark', 'github-light'],
     emitExternalStylesheet: true,
 };
-
-// 主页网站技术块
-export const homeTech: Array<{ title: string; desc: string; href: string }> = [
-    {
-        title: 'Astro',
-        desc: 'Build fast websites, faster.',
-        href: 'https://astro.build',
-    },
-    {
-        title: 'Astro Assets',
-        desc: 'Built-in optimized asset support.',
-        href: 'https://docs.astro.build/en/guides/assets/',
-    },
-    {
-        title: 'Astro Icon',
-        desc: 'An easy to use Icon component for Astro.',
-        href: 'https://github.com/natemoo-re/astro-icon#readme',
-    },
-    {
-        title: 'Tailwind CSS',
-        desc: 'Rapidly build modern websites without ever leaving your HTML.',
-        href: 'https://tailwindcss.com',
-    },
-    {
-        title: 'Markdown',
-        desc: 'Simple and easy-to-use markup language.',
-        href: 'https://www.markdownguide.org/',
-    },
-];
