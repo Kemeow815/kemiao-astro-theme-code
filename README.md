@@ -6,10 +6,12 @@
     <p>一个简单的 Astro 博客主题。</p>
 </div>
 
-<figure style='display:flex;'>
-  <img style='width:80%;' src="./docs/images/pc_preview.png"/>
-  <img style='width:20%;' src="./docs/images/mobile_preview.png"/>
-</figure>
+## 截图
+
+![pc-preview-light](./docs/images/pc-preview-light.png)
+![pc-preview-dark](./docs/images/pc-preview-dark.png)
+![mobile-preview-light](./docs/images/mobile-preview-light.png)
+![mobile-preview-dark](./docs/images/mobile-preview-dark.png)
 
 ## 目录
 
@@ -127,6 +129,7 @@ Cloudflare 部署步骤：
     1. `POCKETBASE_URL`： pocketbase服务服务器地址（如：`http://<ip>:<port>` 或 `https://<domain>`）
     2. `POCKETBASE_USER`：pocketbase 管理员账号
     3. `POCKETBASE_PWD`: pocketbase管理员密码
+    4. `NODE_VERSION`: 部署使用的nodejs版本，不能低于 19 ，例如：`v22.16.0` 。
 
 5. 执行构建，构建完成！
 
