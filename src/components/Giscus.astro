@@ -1,94 +1,33 @@
 ---
-// 文件: src/components/Giscus.astro
-// 使用说明: 请替换以下配置项为你的GitHub信息
-const {
-    repo = '[Kemeow815]/[kemiao-astro-theme-code]', // 替换为你的仓库
-    repoId = '[R_kgDOPC_Eow]', // 从giscus.app获取
-    category = '[Announcements]', // 如"Comments"
-    categoryId = '[DIC_kwDOPC_Eo84CsbK5]', // 从giscus.app获取
-    mapping = 'title', // 推荐使用pathname
-    reactions = '1', // 是否启用表情反应
-    inputPosition = 'top', // 评论框位置
-    lang = 'zh-CN', // 语言
-} = Astro.props;
+// src/components/Giscus.astro
+interface Props {
+    theme?: 'light' | 'dark' | 'auto';
+    lang?: string;
+}
+
+const { theme = 'auto', lang = 'zh-CN' } = Astro.props;
 ---
 
-<div id="giscus-container" class="mt-10"></div>
+<div id="giscus-comments"></div>
 
 <script is:inline>
-    // 初始化Giscus
-    function initGiscus() {
-        const container = document.getElementById('giscus-container');
-        if (!container) return;
-
-        // 移除现有脚本防止重复加载
-        const existingScript = container.querySelector(
-            'script[src*="giscus.app"]',
-        );
-        if (existingScript) existingScript.remove();
-
-        // 创建新脚本
+    document.addEventListener('DOMContentLoaded', () => {
         const script = document.createElement('script');
         script.src = 'https://giscus.app/client.js';
+        script.setAttribute('data-repo', 'Kemeow815/kemiao-astro-theme-code');
+        script.setAttribute('data-repo-id', 'R_kgDOPC_Eow');
+        script.setAttribute('data-category', 'Announcements');
+        script.setAttribute('data-category-id', 'DIC_kwDOPC_Eo84CsbK5');
+        script.setAttribute('data-mapping', 'title');
+        script.setAttribute('data-reactions-enabled', '1');
+        script.setAttribute('data-emit-metadata', '0');
+        script.setAttribute('data-theme', theme);
+        script.setAttribute('data-lang', lang);
+        script.setAttribute('data-loading', 'lazy');
+        script.setAttribute('crossorigin', 'anonymous');
         script.async = true;
-        script.crossOrigin = 'anonymous';
 
-        // 配置参数[[16][27][51]]
-        const config = {
-            'data-repo': `${repo}`,
-            'data-repo-id': `${repoId}`,
-            'data-category': `${category}`,
-            'data-category-id': `${categoryId}`,
-            'data-mapping': `${mapping}`,
-            'data-reactions-enabled': `${reactions}`,
-            'data-emit-metadata': '0',
-            'data-input-position': `${inputPosition}`,
-            'data-theme': isDarkMode() ? 'dark' : 'light',
-            'data-lang': `${lang}`,
-            'data-loading': 'lazy', // 懒加载优化
-        };
-
-        Object.entries(config).forEach(([key, value]) => {
-            script.setAttribute(key, value);
-        });
-
+        const container = document.getElementById('giscus-comments');
         container.appendChild(script);
-    }
-
-    // 检测暗黑模式[[16][78]]
-    function isDarkMode() {
-        return document.documentElement.classList.contains('dark');
-    }
-
-    // 主题切换函数
-    function updateGiscusTheme() {
-        const theme = isDarkMode() ? 'dark' : 'light';
-        const iframe = document.querySelector('iframe.giscus-frame');
-
-        if (iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage(
-                { giscus: { setConfig: { theme } } },
-                'https://giscus.app',
-            );
-        }
-    }
-
-    // 初始加载
-    document.addEventListener('DOMContentLoaded', () => {
-        initGiscus();
-
-        // 监听主题变化[[16][78]]
-        const observer = new MutationObserver(updateGiscusTheme);
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['class'],
-        });
     });
-
-    // 重新初始化函数（供外部调用）
-    window.reloadGiscus = () => {
-        const container = document.getElementById('giscus-container');
-        if (container) container.innerHTML = '';
-        initGiscus();
-    };
 </script>
