@@ -3,6 +3,8 @@ title: "Markdown-速查表"
 description: 记录 Markdown 的用法，便于查找。
 date_created: "2025-02-11 18:22:35"
 id: "markdown-sulanbiao"
+draft: false
+pin: true
 ---
 
 > 原文位置: <https://markdown.com.cn/cheat-sheet.html#%E6%80%BB%E8%A7%88>

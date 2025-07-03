@@ -3,6 +3,7 @@ title: 来将 Telegram 当音乐播放器吧！
 description: 来将 Telegram 当音乐播放器吧！（寻找音乐、即时歌词、无损音乐不失真压缩）
 date_created: "2025-05-15 15:10:35"
 id: "telegram-music"
+draft: false
 ---
 
 ## 来将 Telegram 当音乐播放器吧！（寻找音乐、即时歌词、无损音乐不失真压缩）

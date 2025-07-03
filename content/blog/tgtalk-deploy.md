@@ -3,6 +3,7 @@ title: tgtalk免费部署
 description: 一个基于 Cloudflare Workers 的 tg 频道消息说说。
 date_created: "2025-05-04 23:48:35"
 id: "tgtalk-deploy"
+draft: false
 ---
 
 ## 部署 API

@@ -3,6 +3,7 @@ title: Waline评论在Vercel部署
 description: 使用Waline评论我喜欢使用的部署方法(个人认为最简便)
 date_created: "2025-04-14 08:08:35"
 id: "waline-deploy"
+draft: false
 ---
 
 > 使用Waline评论我喜欢使用的部署方法(个人认为最简便)
