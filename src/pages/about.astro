@@ -1,14 +1,276 @@
 ---
 import Layout from '~/layouts/Base.astro';
+const profileInfo = {
+    name: 'KeMiao',
+    location: 'Nanjing',
+    email: 'kemiaofx@163.com',
+    blog: 'https://blog-v3.kemeow.top',
+    specialties: ['Automation Technology', 'Front-end Development'],
+    personality: '开朗活泼，热爱学习，勤奋工作',
+    school: {
+        name: '南京工业职业技术大学',
+        url: 'https://www.niit.edu.cn/',
+        grade: '大三',
+    },
+    interests: ['计算机', '单机游戏', '电子产品', '数码产品', '资源分享'],
+    dream: '咸鱼算不算？',
+};
 ---
 
 <Layout
-    title="About Me"
-    description="Lorem ipsum dolor sit amet"
+    title={`About ${profileInfo.name}`}
+    description={`${profileInfo.name}的个人主页，自动化专业学生，现于${profileInfo.location}就读`}
     image="/blog-placeholder-about.jpg"
 >
-    <section class="border border-textColor px-4 py-2">
-        <h1 class="title">About</h1>
-        <p>当前页面还未完善~</p>
-    </section>
+    <div class="max-w-4xl mx-auto py-8 px-4">
+        <!-- 个人简介部分 -->
+        <section
+            class="bg-white dark:bg-gray-800 rounded-xl p-6 mb-6 shadow-md"
+        >
+            <div class="text-center mb-8">
+                <a href={profileInfo.blog}>
+                    <img
+                        src="https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif"
+                        alt="KeMiao's GIF"
+                        class="mx-auto rounded-lg max-w-[300px] h-auto mb-4"
+                    />
+                </a>
+                <img
+                    src="https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=300&&section=header&text=HI%20THERE!&fontSize=90&fontAlign=50&fontAlignY=30&desc=I%20AM%20KeMiao%20%F0%9F%91%8B&descAlign=50&descSize=30&descAlignY=60&animation=twinkling"
+                    alt="Header Capsule"
+                    class="w-full h-auto my-4 rounded-lg"
+                />
+            </div>
+
+            <!-- 基本信息 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="space-y-3">
+                    <h2
+                        class="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
+                    >
+                        基本信息
+                    </h2>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <span class="mr-2">🔭</span>
+                            <span>现居地：{profileInfo.location}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">🌱</span>
+                            <span
+                                >研究方向：{
+                                    profileInfo.specialties.join('、')
+                                }</span
+                            >
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">📫</span>
+                            <span
+                                >联系方式：<a
+                                    href={`mailto:${profileInfo.email}`}
+                                    class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                                    >{profileInfo.email}</a
+                                ></span
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2
+                        class="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
+                    >
+                        社交平台
+                    </h2>
+                    <div class="mt-3 flex flex-wrap gap-3">
+                        <a
+                            href="https://blog-v3.kemeow.top"
+                            target="_blank"
+                            class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-md hover:bg-indigo-200 transition-colors"
+                            >博客</a
+                        >
+                        <a
+                            href="https://t.me/KemiaoJun"
+                            target="_blank"
+                            class="px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-md hover:bg-blue-200 transition-colors"
+                            >Telegram</a
+                        >
+                        <a
+                            href="https://x.com/kemiaosw/"
+                            target="_blank"
+                            class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+                            >X</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- 自我介绍 -->
+            <div class="mb-6">
+                <img
+                    src="https://readme-typing-svg.demolab.com?font=Orbitron&size=25&pause=1000&center=true&vCenter=true&random=false&width=600&lines=Welcome+to+my+About+page!;I+am+KeMiao+obsessed+with+programming!"
+                    alt="Typing SVG"
+                    class="w-full h-auto my-4"
+                />
+
+                <div class="prose dark:prose-invert max-w-none">
+                    <h3 class="text-xl font-bold mb-3">👋 个人简介</h3>
+                    <p class="mb-4">
+                        大家好！这里是克喵爱吃卤面的博客。致力于分享资源、生活日记和踩坑教程，代码水准一般，自动化专业学生，现于南京就读，普通的大学牛马。
+                    </p>
+                    <p class="flex flex-wrap gap-2">
+                        <a
+                            href="https://kemiao.online"
+                            class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                            >个人主页</a
+                        >
+                        <a
+                            href="https://blog-v3.kemeow.top"
+                            class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                            >博客站点</a
+                        >
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 详细信息 -->
+        <section
+            class="bg-white dark:bg-gray-800 rounded-xl p-6 mb-6 shadow-md"
+        >
+            <h2
+                class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4"
+            >
+                关于我
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">📌 个性与技能</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <span class="mr-2">✨</span>
+                            <span>个性：{profileInfo.personality}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">🔧</span>
+                            <span
+                                >专业技能：{
+                                    profileInfo.specialties.join('、')
+                                }</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">🎓 教育背景</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <span class="mr-2">🏫</span>
+                            <span
+                                >学校：<a
+                                    href={profileInfo.school.url}
+                                    target="_blank"
+                                    class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                                    >{profileInfo.school.name}</a
+                                ></span
+                            >
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">📅</span>
+                            <span>年级：{profileInfo.school.grade}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">👨‍🎓</span>
+                            <span>职业：学生</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">❤️ 兴趣爱好</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {
+                            profileInfo.interests.map((interest) => (
+                                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">
+                                    {interest}
+                                </span>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">💭 梦想</h3>
+                    <p class="flex items-start">
+                        <span class="mr-2">🌟</span>
+                        <span>{profileInfo.dream}</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GitHub统计 -->
+        <section
+            class="bg-white dark:bg-gray-800 rounded-xl p-6 mb-6 shadow-md"
+        >
+            <h2
+                class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4"
+            >
+                📈 GitHub 数据
+            </h2>
+
+            <div class="grid grid-cols-1 gap-6">
+                <img
+                    src="https://github-readme-stats.vercel.app/api?username=Kemeow815"
+                    alt="GitHub Stats"
+                    class="w-full h-auto rounded-lg"
+                />
+                <img
+                    src="https://github-readme-activity-graph.vercel.app/graph?username=Kemeow815&theme=github-compact&custom_title=Activity&radius=30&height=300"
+                    alt="Activity Graph"
+                    class="w-full h-auto rounded-lg"
+                />
+                <img
+                    src="https://github-immortality.vercel.app/api?username=Kemeow815"
+                    alt="修仙系列统计卡片"
+                    class="w-full h-auto rounded-lg"
+                />
+            </div>
+        </section>
+
+        <!-- 赞助信息 -->
+        <section class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
+            <h2
+                class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4"
+            >
+                💖 赞助支持
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-4 items-center">
+                <a
+                    href="https://wechat.kemeow.top/"
+                    class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-center w-full sm:w-auto"
+                >
+                    微信公众号：克喵的小站
+                </a>
+                <a
+                    href="https://donate.kemeow.top/"
+                    class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-center w-full sm:w-auto"
+                >
+                    前往赞助页面
+                </a>
+            </div>
+        </section>
+    </div>
 </Layout>
+
+<style>
+    .prose a {
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .prose a:hover {
+        text-decoration: underline;
+    }
+</style>

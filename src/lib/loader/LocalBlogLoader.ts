@@ -9,7 +9,7 @@ export const localBlogSchema = z.object({
     id: z.string(),
     title: z.string(),
     description: z.string().default(''),
-    date_created: z.date().transform((v) => new Date(v)),
+    date_created: z.string().transform((str) => new Date(str)),
     date_updated: z
         .date()
         .default(new Date())

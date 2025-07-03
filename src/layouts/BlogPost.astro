@@ -8,6 +8,7 @@ import BaseLayout from '~/layouts/Base.astro';
 import FormattedDate from '~/components/FormattedDate.astro';
 import TOC from '~/components/TableOfContents.astro';
 import BackToTopBtn from '~/components/BackToTopBtn.astro';
+import Giscus from '~/components/Giscus.astro';
 
 interface Props {
     post: CollectionEntry<'blog'>;
@@ -198,6 +199,7 @@ const articleLink = Astro.url.toString();
                         <span>转载请保留本文地址，著作权归作者所有。</span>
                     </span>
                 </div>
+                <Giscus />
                 <BackToTopBtn />
             </article>
         </div>

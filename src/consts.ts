@@ -23,13 +23,13 @@ type SocialLink = {
 };
 
 export const siteConfig: Config = {
-    title: 'twiify的博客',
-    description: '我的博客空间，记录生活的惊喜。',
+    title: '喵落阁',
+    description: '每一段旅行，都有终点',
     lang: 'zh-CN',
-    helloworld: `生活总是充满惊喜，记录是最好的礼物。<br/>希望你能在这里找到一些惊喜。`,
+    helloworld: `<p>奇迹只能一时，命运总是漫长。<br/>愿你看清一切真相后，依旧热爱你的家人和朋友。</p>`,
     profile: {
-        author: 'twiify',
-        description: '简单生活，优雅前行。',
+        author: '克喵爱吃卤面',
+        description: '愿你看清一切真相后，依旧热爱你的家人和朋友。',
     },
     pageSize: 10,
 };
@@ -43,12 +43,32 @@ export const socialLinks: Array<SocialLink> = [
     {
         icon: 'mdi:github',
         friendlyName: 'Github',
-        link: 'https://github.com/twiify/astro-theme-code',
+        link: 'https://github.com/Kemeow815',
     },
     {
         icon: 'mdi:email',
         friendlyName: 'email',
-        link: 'mailto:ppixiu07@gmail.com',
+        link: 'mailto:me@kemiaosw.top',
+    },
+    {
+        icon: 'mdi:telegram',
+        friendlyName: 'telegram',
+        link: 'https://t.me/KemiaoJun',
+    },
+    {
+        icon: 'mdi:qqchat',
+        friendlyName: 'qq',
+        link: 'https://qm.qq.com/q/J9VDiX6KoS',
+    },
+    {
+        icon: 'ri:bilibili-line',
+        friendlyName: 'bilibili',
+        link: 'https://space.bilibili.com/3546643173477234',
+    },
+    {
+        icon: 'ri:netease-cloud-music-fill',
+        friendlyName: 'netease',
+        link: 'https://music.163.com/#/user/home?id=1725716511',
     },
     {
         icon: 'mdi:rss',
@@ -66,19 +86,31 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
     // Use the exported NavLink type
     {
-        title: 'Home',
+        title: '首页',
         path: '/',
     },
     {
-        title: 'Blog',
+        title: '文章',
         path: '/blog',
     },
     {
-        title: 'Friends',
+        title: '朋友',
         path: '/friends',
     },
     {
-        title: 'About',
+        title: '音乐',
+        path: 'https://music.kemiao.online',
+    },
+    {
+        title: '相册',
+        path: 'https://photos.050815.xyz',
+    },
+    {
+        title: '朋友圈',
+        path: 'https://moment.050815.xyz',
+    },
+    {
+        title: '关于',
         path: '/about',
     },
 ];

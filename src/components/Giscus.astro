@@ -1,0 +1,137 @@
+---
+// src/components/giscus.astro
+
+// 配置参数（使用您的实际值）
+const giscusConfig = {
+    repo: 'Kemeow815/kemiao-astro-theme-code',
+    repoId: 'R_kgDOPC_Eow',
+    category: 'Announcements',
+    categoryId: 'DIC_kwDOPC_Eo84CsbK5',
+    mapping: 'title',
+    lazyLoad: true,
+};
+---
+
+<section id="giscus-comments" class="giscus-container mx-auto mt-12 max-w-3xl">
+</section>
+
+<script is:inline>
+    // 主题映射配置（可扩展）
+    const themeMap = {
+        light: 'light',
+        dark: 'dark_dimmed',
+        pink: 'https://giscus.app/themes/pink.css',
+        // 添加更多自定义主题...
+    };
+
+    // 获取当前主题
+    function getCurrentTheme() {
+        // 检查 Tailwind 暗黑模式
+        if (document.documentElement.classList.contains('dark')) {
+            return themeMap.dark;
+        }
+
+        // 检查 localStorage 主题设置
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme && themeMap[savedTheme]) {
+            return themeMap[savedTheme];
+        }
+
+        // 检查系统偏好设置
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return themeMap.dark;
+        }
+
+        // 默认主题
+        return themeMap.light;
+    }
+
+    // 更新 Giscus 主题
+    function updateGiscusTheme() {
+        const theme = getCurrentTheme();
+        const iframe = document.querySelector('iframe.giscus-frame');
+
+        if (iframe) {
+            iframe.contentWindow.postMessage(
+                { giscus: { setConfig: { theme } } },
+                'https://giscus.app',
+            );
+        }
+    }
+
+    // 初始化 Giscus
+    function initGiscus() {
+        const config = {
+            'data-repo': '${giscusConfig.repo}',
+            'data-repo-id': '${giscusConfig.repoId}',
+            'data-category': '${giscusConfig.category}',
+            'data-category-id': '${giscusConfig.categoryId}',
+            'data-mapping': '${giscusConfig.mapping}',
+            'data-strict': '0',
+            'data-reactions-enabled': '1',
+            'data-emit-metadata': '0',
+            'data-input-position': 'bottom',
+            'data-theme': getCurrentTheme(),
+            'data-lang': 'en',
+            'data-loading': '${giscusConfig.lazyLoad ? "lazy" : "auto"}',
+            'data-cors': 'anonymous',
+        };
+
+        const script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+
+        // 设置配置属性
+        Object.entries(config).forEach(([key, value]) => {
+            script.setAttribute(key, value);
+        });
+
+        // 挂载到容器
+        document.getElementById('giscus-comments').appendChild(script);
+
+        // 设置主题切换监听
+        setupThemeListeners();
+    }
+
+    // 设置主题监听器
+    function setupThemeListeners() {
+        // 监听 Tailwind 主题切换
+        const observer = new MutationObserver(updateGiscusTheme);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class'],
+        });
+
+        // 监听 localStorage 变化
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') updateGiscusTheme();
+        });
+
+        // 监听系统主题变化
+        window
+            .matchMedia('(prefers-color-scheme: dark)')
+            .addEventListener('change', updateGiscusTheme);
+    }
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', initGiscus);
+</script>
+
+<style>
+    .giscus-container {
+        min-height: 350px;
+    }
+
+    /* 暗黑模式适配 */
+    .dark .giscus-frame {
+        --color-border: #444;
+        --color-bg-secondary: #222;
+    }
+
+    /* 自定义主题示例 */
+    :root[data-theme='pink'] .giscus-frame {
+        --color-border: #f9a8d4;
+        --color-bg-secondary: #fdf2f8;
+    }
+</style>

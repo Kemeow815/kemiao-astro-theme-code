@@ -1,15 +1,11 @@
+import { glob } from 'astro/loaders';
 import { defineCollection } from 'astro:content';
-import { PocketBaseLoader, postSchema } from '~/lib/loader/PocketBaseLoader';
+import { localBlogSchema } from '~/lib/loader/LocalBlogLoader.ts';
 
 // 博客集合
 const blog = defineCollection({
-    type: 'content_layer',
-    loader: PocketBaseLoader({
-        url: import.meta.env.POCKETBASE_URL,
-        user: import.meta.env.POCKETBASE_USER,
-        pwd: import.meta.env.POCKETBASE_PWD,
-    }),
-    schema: postSchema,
+    loader: glob({ pattern: '**/[^_]*.md', base: './content/blogs' }),
+    schema: localBlogSchema,
 });
 
 export const collections = { blog };

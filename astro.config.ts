@@ -10,11 +10,13 @@ import { remarkReadingTime } from './src/lib/plugin/remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://blog.twiify.com',
+    site: 'https://myblog.050815.xyz',
     integrations: [
         astroExpressiveCode(expressiveCodeOptions),
         sitemap(),
-        astroIcon(),
+        astroIcon({
+            include: { ri: ['*'] }, // 显式启用 ri 图标集
+        }),
         robotsTxt({
             sitemap: true,
             sitemapBaseFileName: 'sitemap-0',
