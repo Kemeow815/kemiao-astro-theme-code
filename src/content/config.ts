@@ -4,7 +4,7 @@ import { localBlogSchema } from '~/lib/loader/LocalBlogLoader.ts';
 
 // 博客集合
 const blog = defineCollection({
-    loader: glob({ pattern: '**/[^_]*.md', base: '.src/content/blogs' }),
+    loader: glob({ pattern: '**/[^_]*.md', base: './content/blog' }),
     schema: localBlogSchema,
 });
 
