@@ -3,6 +3,7 @@ title: Git 同步上游仓库的更新
 description: 同步上游仓库的更新，保持本地仓库与远程仓库的一致性。
 date_created: "2025-04-04 20:13:35"
 id: "git-tongbu"
+draft: false
 ---
 
 # Git 同步上游仓库的更新
